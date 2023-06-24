@@ -1,0 +1,128 @@
+<?xml version='1.0'?>
+<sdf version="1.4">
+    <model name="custom_mid_obj">
+        <pose>0 0 1.3 0 0 0</pose>
+        <static>false</static>
+        <link name="link">
+        
+            <inertial>
+                <mass>1.0</mass>
+                <inertia>
+                    <ixx>0.083</ixx>
+                    <ixy>0.0</ixy>
+                    <ixz>0.0</ixz>
+                    <iyy>0.083</iyy>
+                    <iyz>0.0</iyz>
+                    <izz>0.083</izz>
+                </inertia>
+            </inertial>
+
+            <collision name="collision1_cyl">
+                <geometry>
+                    <cylinder>
+                        <length>1.0</length>
+                        <radius>0.2</radius>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name="visual1_cyl">
+                <geometry>
+                    <cylinder>
+                        <length>1.0</length>
+                        <radius>0.2</radius>
+                    </cylinder>
+                </geometry>
+            </visual>
+
+            <collision name="collision1_box">
+            <pose>1 0 -0.25 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>2 0.2 0.5</size>
+                    </box>
+                </geometry>
+            </collision>
+            <visual name="visual1_box">
+            <pose>1 0 -0.25 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>2 0.2 0.5</size>
+                    </box>
+                </geometry>
+            </visual>
+
+            <collision name="collision1_cy2">
+            <pose>2 0 0 0 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <length>1.0</length>
+                        <radius>0.2</radius>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name="visual1_cy2">
+            <pose>2 0 0 0 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <length>1.0</length>
+                        <radius>0.2</radius>
+                    </cylinder>
+                </geometry>
+            </visual>
+
+            <collision name="collision2_box">
+            <pose>1.5 0.866 -0.25 0 0 2.0944</pose>
+                <geometry>
+                    <box>
+                        <size>2 0.2 0.5</size>
+                    </box>
+                </geometry>
+            </collision>
+            <visual name="visual2_box">
+            <pose>1.5 0.866 -0.25 0 0 2.0944</pose>
+                <geometry>
+                    <box>
+                        <size>2 0.2 0.5</size>
+                    </box>
+                </geometry>
+            </visual>
+
+            <collision name="collision1_cy3">
+            <pose>1 1.732 0 0 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <length>1.0</length>
+                        <radius>0.2</radius>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name="visual1_cy3">
+            <pose>1 1.732 0 0 0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <length>1.0</length>
+                        <radius>0.2</radius>
+                    </cylinder>
+                </geometry>
+            </visual>
+
+            <collision name="collision3_box">
+            <pose>0.5 0.866 -0.25 0 0 1.0472</pose>
+                <geometry>
+                    <box>
+                        <size>2 0.2 0.5</size>
+                    </box>
+                </geometry>
+            </collision>
+            <visual name="visual3_box">
+            <pose>0.5 0.866 -0.25 0 0 1.0472</pose>
+                <geometry>
+                    <box>
+                        <size>2 0.2 0.5</size>
+                    </box>
+                </geometry>
+            </visual>
+
+        </link>
+    </model>
+</sdf>
