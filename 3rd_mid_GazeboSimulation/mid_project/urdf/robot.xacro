@@ -11,7 +11,7 @@
     <link name="link_chassis">
         <inertial>
             <mass value="${chassis_mass}" />
-            <origin xyz="0 0 0.3" rpy="0 0 0" />
+            <origin xyz="0 0 0.2" rpy="0 0 0" />
             <inertia ixx="1.5417" ixy="0" ixz="0" iyy="3.467" iyz="0" izz="4.742" />
         </inertial>
 

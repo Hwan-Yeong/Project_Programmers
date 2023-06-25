@@ -2,8 +2,12 @@
 import rospy
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
+# initialize publisher
 cmd_pub = None
 
+# laser detection data
+# store the minimum distance in each area (right, fright, front, fleft, left)
+# minimun: 0.2m / maximun: 10m
 def laser_callback(msg):
     regions = {
         'right':  min(min(msg.ranges[0:143]), 10),
@@ -13,47 +17,76 @@ def laser_callback(msg):
         'left':   min(min(msg.ranges[576:719]), 10),
     }
 
+    # take action based on regions data
     take_action(regions)
 
 def take_action(regions):
     msg = Twist()
     linear_x = 0
     angular_z = 0
+    safety_dist = 1
+    straight_vel = 0.6
+    reverse_vel = -0.3
+    steering_vel_left = 0.3
+    steering_vel_right = -0.3
 
+    # variable to indicate the current state
     state_description = ''
 
-    if regions['front'] > 1 and regions['fleft'] > 1 and regions['fright'] > 1:
-        state_description = 'case 1 - nothing'
-        linear_x = 0.6
+    if regions['front'] > safety_dist and regions['fleft'] > safety_dist and regions['fright'] > safety_dist:
+        state_description = 'case 1 : go forward (nothing)'
+        linear_x = straight_vel
         angular_z = 0
-    elif regions['front'] < 1 and regions['fleft'] > 1 and regions['fright'] > 1:
-        state_description = 'case 2 - front'
+
+    elif regions['front'] < safety_dist and regions['fleft'] > safety_dist and regions['fright'] > safety_dist:
+        if regions['left'] > regions ['right']:
+            state_description = 'case 2-1 : go backward and turn left(front)'
+            linear_x = reverse_vel
+            angular_z = steering_vel_left
+        elif regions['fleft'] < regions ['fright']:
+            state_description = 'case 2-1 : go backward and turn right(front)'
+            linear_x = reverse_vel
+            angular_z = steering_vel_right
+        else :
+            linear_x = reverse_vel
+
+    elif regions['front'] > safety_dist and regions['fleft'] > safety_dist and regions['fright'] < safety_dist:
+        state_description = 'case 3 : turn left (fright)'
         linear_x = 0
-        angular_z = 0.3
-    elif regions['front'] > 1 and regions['fleft'] > 1 and regions['fright'] < 1:
-        state_description = 'case 3 - fright'
+        angular_z = steering_vel_left
+
+    elif regions['front'] > safety_dist and regions['fleft'] < safety_dist and regions['fright'] > safety_dist:
+        state_description = 'case 4 : turn right (fleft)'
         linear_x = 0
-        angular_z = 0.3
-    elif regions['front'] > 1 and regions['fleft'] < 1 and regions['fright'] > 1:
-        state_description = 'case 4 - fleft'
+        angular_z = steering_vel_right
+
+    elif regions['front'] < safety_dist and regions['fleft'] > safety_dist and regions['fright'] < safety_dist:
+        state_description = 'case 5 : turn left (front and fright)'
         linear_x = 0
-        angular_z = -0.3
-    elif regions['front'] < 1 and regions['fleft'] > 1 and regions['fright'] < 1:
-        state_description = 'case 5 - front and fright'
+        angular_z = steering_vel_left * 2
+
+    elif regions['front'] < safety_dist and regions['fleft'] < safety_dist and regions['fright'] > safety_dist:
+        state_description = 'case 6 : turn right (front and fleft)'
         linear_x = 0
-        angular_z = 0.3
-    elif regions['front'] < 1 and regions['fleft'] < 1 and regions['fright'] > 1:
-        state_description = 'case 6 - front and fleft'
-        linear_x = 0
-        angular_z = -0.3
-    elif regions['front'] < 1 and regions['fleft'] < 1 and regions['fright'] < 1:
-        state_description = 'case 7 - front and fleft and fright'
-        linear_x = 0
-        angular_z = 0.3
-    elif regions['front'] > 1 and regions['fleft'] < 1 and regions['fright'] < 1:
-        state_description = 'case 8 - fleft and fright'
-        linear_x = 0.3
+        angular_z = steering_vel_right  * 2
+
+    elif regions['front'] < safety_dist and regions['fleft'] < safety_dist and regions['fright'] < safety_dist:
+        if regions['left'] > regions ['right']:
+            state_description = 'case 7-1 : go backward and turn left(all around)'
+            linear_x = reverse_vel
+            angular_z = steering_vel_left * 2
+        elif regions['fleft'] < regions ['fright']:
+            state_description = 'case 7-2 : go backward and turn right(all around)'
+            linear_x = reverse_vel
+            angular_z = steering_vel_right * 2
+        else :
+            linear_x = reverse_vel
+
+    elif regions['front'] > safety_dist and regions['fleft'] < safety_dist and regions['fright'] < safety_dist:
+        state_description = 'case 8 - go forward(fleft and fright)'
+        linear_x = straight_vel / 2
         angular_z = 0
+
     else:
         state_description = 'unknown case'
 
