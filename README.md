@@ -18,4 +18,11 @@
    <img src="https://github.com/Hwan-Yeong/Project_Programmers/assets/130347326/1458f103-32be-4f5a-8447-bdd7a2f72652" width="500" height="300">
  - Camera&OpenCV 사용하여 주차구역 인식하는 미션 실패 (프로젝트 시간부족)
 
-## 3. 
+## 3. 시뮬레이션 기초편 활용 (Mid_Project)
+ - Mint20 / gazebo11 / ros noetic
+ - 로봇 모델 생성 (urdf, mesh, xacro, gazebo)
+ - ROS plugin (robot differential driver, robot laser sensor, joint control)
+ - World 만들기 (gazebo models, DEM(digital elevation models, population)
+ - Plugin 개발 (world plugin, model plugin)
+
+<img src="https://github.com/Hwan-Yeong/Project_Programmers/assets/130347326/86effe5e-07d7-4165-b216-89fbe5d8b3b7" width="650" height="500">
