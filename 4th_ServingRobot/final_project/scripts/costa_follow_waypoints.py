@@ -95,7 +95,7 @@ class FollowPath(State):
 
     def execute(self, userdata):
         global waypoints
-
+        i = 2
         for waypoint in waypoints:
             if waypoints == []:
                 rospy.loginfo("The waypoint queue has been reset.")
@@ -106,11 +106,42 @@ class FollowPath(State):
             goal.target_pose.pose.position = waypoint.pose.pose.position
             goal.target_pose.pose.orientation = waypoint.pose.pose.orientation
 
-            rospy.loginfo("Executing move_base goal to position (x, y): %s, %s" %
+            rospy.loginfo(">>>>> Go to waypoint: " + str(i) + "   [ position (x, y): %s, %s ]" %
                           (waypoint.pose.pose.position.x, waypoint.pose.pose.position.y))
-            rospy.loginfo("To cancel the goal: 'rostopic pub -1 /move_base/cancel actionlib_msgs/GoalID -- {}'")
+            # rospy.loginfo("To cancel the goal: 'rostopic pub -1 /move_base/cancel actionlib_msgs/GoalID -- {}'")
             self.client.send_goal(goal=goal)
             self.client.wait_for_result()
+
+            if waypoint.pose.pose.position.x == 4.68:
+                rospy.loginfo("############### RECEIVING FOOD ###############")
+                rospy.loginfo("########## PLEASE WAIT FOR 5 SECONDS #########")
+                rospy.loginfo("##############################################")
+                rospy.sleep(5)
+            if waypoint.pose.pose.position.x == 5.44:
+                rospy.loginfo("###### Delivery completed at waypoint 3 ######")
+            if waypoint.pose.pose.position.x == -6.05:
+                rospy.loginfo("###### Delivery completed at waypoint 4 ######")
+            if waypoint.pose.pose.position.x == -11.62:
+                rospy.loginfo("###### Delivery completed at waypoint 5 ######")
+                rospy.loginfo("########## FOOD DELIVERY SUCCESSFUL ##########")
+                rospy.loginfo("##############################################")   
+
+            # if waypoint == waypoints[0]:
+            #     rospy.loginfo("############### RECEIVING FOOD ###############")
+            #     rospy.loginfo("########## PLEASE WAIT FOR 5 SECONDS #########")
+            #     rospy.loginfo("##############################################")
+            #     rospy.sleep(5)
+            # if waypoint == waypoints[1]:
+            #     rospy.loginfo("###### Delivery completed at waypoint 3 ######")
+            # if waypoint == waypoints[2]:
+            #     rospy.loginfo("###### Delivery completed at waypoint 4 ######")
+            # if waypoint == waypoints[3]:
+            #     rospy.loginfo("###### Delivery completed at waypoint 5 ######")
+            #     rospy.loginfo("########## FOOD DELIVERY SUCCESSFUL ##########")
+            #     rospy.loginfo("##############################################")               
+            
+            i += 1
+
         return 'success'
 
 ################################################################################
@@ -120,8 +151,9 @@ class PathComplete(State):
         State.__init__(self, outcomes=['success'])
 
     def execute(self, userdata):
+        rospy.loginfo("########## RETURNING USED TABLEWARE ##########")
         rospy.loginfo("###############################")
-        rospy.loginfo("##### REACHED FINISH GATE #####")
+        rospy.loginfo("##### FINISH THE MISSIONS #####")
         rospy.loginfo("###############################")
         return 'success'
     

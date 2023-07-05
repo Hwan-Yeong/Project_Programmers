@@ -7,13 +7,13 @@ import tf.transformations
 from std_msgs.msg import Empty
 from geometry_msgs.msg import PoseWithCovarianceStamped
 
-# wp_id : (x, y)
+# wp_id : (x, y yaw)
 # add to 'Publish Point' button in rviz -> rostopic echo /clicked-point
-wp_list = {1 : (4.68, 0.0),
-           2 : (5.44, -4.67),
-           3 : (-6.05, -4.17),
-           4 : (-11.62, 0.0),
-           5 : (-8.75, 0.0)}
+wp_list = {1 : (4.68, 0.0, 0.0),
+           2 : (5.44, -4.67, -1.5708),
+           3 : (-6.05, -4.17, -0.8603),
+           4 : (-11.62, 0.0, 1.2036),
+           5 : (-8.75, 0.0, 3.1415)}
 
 
 def talker():
@@ -27,21 +27,21 @@ def talker():
     my_wp.header.stamp = rospy.Time.now()
     my_wp.header.frame_id = 'map'
 
-    init_roll = 0.0
-    init_pitch = 0.0
-    init_yaw = 0.7071
-
-    quaternion = tf.transformations.quaternion_from_euler(init_roll, init_pitch, init_yaw)
-
-    my_wp.pose.pose.orientation.x = quaternion[0]
-    my_wp.pose.pose.orientation.y = quaternion[1]
-    my_wp.pose.pose.orientation.z = quaternion[2]
-    my_wp.pose.pose.orientation.w = quaternion[3]
-
     for i in range(len(wp_list)):
         rospy.loginfo("Waypoint" + str(i))
         my_wp.pose.pose.position.x = wp_list[i+1][0]
         my_wp.pose.pose.position.y = wp_list[i+1][1]
+
+        roll = 0.0
+        pitch = 0.0
+        yaw = wp_list[i+1][2]
+
+        quaternion = tf.transformations.quaternion_from_euler(roll, pitch, yaw)
+
+        my_wp.pose.pose.orientation.x = quaternion[0]
+        my_wp.pose.pose.orientation.y = quaternion[1]
+        my_wp.pose.pose.orientation.z = quaternion[2]
+        my_wp.pose.pose.orientation.w = quaternion[3]
 
         while not rospy.is_shutdown():
             connections = pub_wp.get_num_connections()
