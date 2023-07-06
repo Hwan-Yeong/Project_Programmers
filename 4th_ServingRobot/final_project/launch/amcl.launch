@@ -10,7 +10,4 @@
     <remap from="scan" to="$(arg scan_topic)"/>    
   </node>
 
-  <!-- Visualization -->
-  <node name="rviz" pkg="rviz" type="rviz" args="$(find final_project)/rviz/costa_nav.rviz" />
-
 </launch>
