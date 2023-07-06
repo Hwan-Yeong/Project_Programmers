@@ -28,4 +28,7 @@
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>
   </node>
+  
+  <!-- Visualization -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find final_project)/rviz/costa_nav.rviz" />
 </launch>

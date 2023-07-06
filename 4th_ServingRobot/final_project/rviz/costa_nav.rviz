@@ -7,7 +7,7 @@ Panels:
         - /Global Options1
         - /LaserScan1
       Splitter Ratio: 0.5
-    Tree Height: 360
+    Tree Height: 178
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -312,6 +312,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: true
-  Width: 959
-  X: 960
+  Width: 1267
+  X: 652
   Y: 0
