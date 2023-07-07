@@ -96,7 +96,7 @@ class FollowPath(State):
     def execute(self, userdata):
         global waypoints
         i = 2
-        for waypoint in waypoints:
+        for waypoint in waypoints[0:5]:
             if waypoints == []:
                 rospy.loginfo("The waypoint queue has been reset.")
                 break
@@ -119,30 +119,27 @@ class FollowPath(State):
                 rospy.sleep(5)
             if waypoint.pose.pose.position.x == 5.44:
                 rospy.loginfo("###### Delivery completed at waypoint 3 ######")
-            if waypoint.pose.pose.position.x == -6.05:
+            if waypoint.pose.pose.position.x == -6.0:
                 rospy.loginfo("###### Delivery completed at waypoint 4 ######")
-            if waypoint.pose.pose.position.x == -11.62:
+            if waypoint.pose.pose.position.x == -12.0:
                 rospy.loginfo("###### Delivery completed at waypoint 5 ######")
                 rospy.loginfo("########## FOOD DELIVERY SUCCESSFUL ##########")
-                rospy.loginfo("##############################################")   
-
-            # if waypoint == waypoints[0]:
-            #     rospy.loginfo("############### RECEIVING FOOD ###############")
-            #     rospy.loginfo("########## PLEASE WAIT FOR 5 SECONDS #########")
-            #     rospy.loginfo("##############################################")
-            #     rospy.sleep(5)
-            # if waypoint == waypoints[1]:
-            #     rospy.loginfo("###### Delivery completed at waypoint 3 ######")
-            # if waypoint == waypoints[2]:
-            #     rospy.loginfo("###### Delivery completed at waypoint 4 ######")
-            # if waypoint == waypoints[3]:
-            #     rospy.loginfo("###### Delivery completed at waypoint 5 ######")
-            #     rospy.loginfo("########## FOOD DELIVERY SUCCESSFUL ##########")
-            #     rospy.loginfo("##############################################")               
+                rospy.loginfo("##############################################")            
             
             i += 1
 
+        for waypoint in waypoints[5:8]:
+            goal = MoveBaseGoal()
+            goal.target_pose.header.frame_id = self.frame_id
+            goal.target_pose.pose.position = waypoint.pose.pose.position
+            goal.target_pose.pose.orientation = waypoint.pose.pose.orientation
+
+            self.client.send_goal(goal=goal)
+            self.client.wait_for_result()
+
         return 'success'
+    
+
 
 ################################################################################
 
