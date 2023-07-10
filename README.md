@@ -29,6 +29,6 @@
 
 ## 4. 서빙로봇 시뮬레이션 프로젝트 (Final_Project)
  - Mint20 / gazebo11 / ros noetic / turtlebot3
- - SLAM -> Localization -> Path Planning -> Control
+ - Mapping -> Localization -> Path Planning -> Control
  - gmapping / amcl / Navfn (global), DWA (local) Planner / move_base, state machine 등의 오픈소스 라이브러리 및 패키지 사용
  - waypoint를 따라 주행하는 python 코드 작성 (smach)
