@@ -28,7 +28,11 @@
 <img src="https://github.com/Hwan-Yeong/Project_Programmers/assets/130347326/86effe5e-07d7-4165-b216-89fbe5d8b3b7" width="650" height="500">
 
 ## 4. 서빙로봇 시뮬레이션 프로젝트 (Final_Project)
+![Untitled](https://github.com/Hwan-Yeong/Project_Programmers/assets/130347326/25e292eb-9216-4b81-819d-49884ff89846)
+
  - Mint20 / gazebo11 / ros noetic / turtlebot3
  - Mapping -> Localization -> Path Planning -> Control
  - gmapping / amcl / Navfn (global), DWA (local) Planner / move_base, state machine 등의 오픈소스 라이브러리 및 패키지 사용
  - waypoint를 따라 주행하는 python 코드 작성 (smach)
+ - 발표 동영상
+   - https://www.youtube.com/watch?v=m0fupSokvzg
